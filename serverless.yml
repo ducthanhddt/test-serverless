@@ -2,32 +2,17 @@ service: dynamodb-crud-api
 
 provider:
   name: aws
-  runtime: nodejs20.x
-  stage: staging
+  runtime: nodejs14.x
+  stage: dev
   region: us-west-1
   environment:
     DYNAMODB_TABLE_NAME: ${self:custom.postsTableName}
-  
-plugins:
-  - serverless-dynamodb
-  - serverless-iam-roles-per-function
-  - serverless-offline
 
 custom:
   postsTableName: posts-table-${self:provider.stage}
-  dynamodb:
-  # If you only want to use DynamoDB Local in some stages, declare them here
-    stages:
-      - dev
-    start:
-      docker: true
-      port: 8000
-      inMemory: true
-      migrate: true
-      seed: true
-      convertEmptyValues: true
-    # Uncomment only if you already have a DynamoDB running locally
-    # noStart: true
+
+plugins:
+  - serverless-iam-roles-per-function
 
 functions:
   getPost:
@@ -100,20 +85,6 @@ functions:
         Action:
           - "dynamodb:Scan"
         Resource: !GetAtt PostsTable.Arn
-  getAllNotes:
-    handler: api.getAllNotes
-    name: get-all-notes
-    memorySize: 128 # mb
-    timeout: 5 # seconds
-    events:
-      - http:
-          path: notes
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:Scan"
-        Resource: !GetAtt NotesTable.Arn
 
 resources:
   Resources:
