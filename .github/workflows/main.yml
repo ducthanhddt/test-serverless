@@ -26,9 +26,14 @@ jobs:
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
     - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
+      # uses: actions/setup-node@v4
+      # with:
+      #   node-version: nodejs20.x
+      uses: actions/setup-node@main
       with:
-        node-version: nodejs20.x
+        node-version-file: ../../package-lock.json
+        cache: "npm"
+        cache-dependency-path: ../../package-lock.json
 
     - name: Install dependencies
       run: npm install
