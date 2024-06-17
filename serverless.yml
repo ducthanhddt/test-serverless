@@ -3,7 +3,7 @@ service: dynamodb-crud-api
 provider:
   name: aws
   runtime: nodejs20.x
-  stage: dev
+  stage: staging
   region: us-west-1
   environment:
     DYNAMODB_TABLE_NAME: ${self:custom.postsTableName}
