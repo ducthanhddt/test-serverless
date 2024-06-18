@@ -1,6 +1,6 @@
 const dynamoose = require("dynamoose");
 
-console.log('sdfdsfsdfsdf', process.env.NODE_ENV)
+console.log('sdfdsfsdfsdf', process.env.NODE_ENV, process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY)
 const ddb =
   process.env.NODE_ENV === "development"
     ? new dynamoose.aws.ddb.DynamoDB({
@@ -12,6 +12,10 @@ const ddb =
         endpoint: "http://0.0.0.0:8000",
       })
     : new dynamoose.aws.ddb.DynamoDB({
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        },
         "region": "us-west-1"
       });
 
