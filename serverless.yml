@@ -34,7 +34,7 @@ custom:
 
 functions:
   getPost:
-    handler: apis.getPost
+    handler: src/apis.getPost
     name: get-post-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -48,7 +48,7 @@ functions:
           - "dynamodb:GetItem"
         Resource: !GetAtt PostsTable.Arn
   createPost:
-    handler: apis.createPost
+    handler: src/apis.createPost
     name: create-post-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -62,7 +62,7 @@ functions:
           - "dynamodb:PutItem"
         Resource: !GetAtt PostsTable.Arn
   updatePost:
-    handler: apis.updatePost
+    handler: src/apis.updatePost
     name: update-post-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -76,7 +76,7 @@ functions:
           - "dynamodb:UpdateItem"
         Resource: !GetAtt PostsTable.Arn
   deletePost:
-    handler: apis.deletePost
+    handler: src/apis.deletePost
     name: delete-post-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -90,7 +90,7 @@ functions:
           - "dynamodb:DeleteItem"
         Resource: !GetAtt PostsTable.Arn
   getAllPosts:
-    handler: apis.getAllPosts
+    handler: src/apis.getAllPosts
     name: get-all-posts-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -104,7 +104,7 @@ functions:
           - "dynamodb:Scan"
         Resource: !GetAtt PostsTable.Arn
   getAllNotes:
-    handler: apis.getAllNotes
+    handler: src/apis.getAllNotes
     name: get-all-notes-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -118,7 +118,7 @@ functions:
           - "dynamodb:Scan"
         Resource: !GetAtt NotesTable.Arn
   createMock:
-    handler: apis.createMock
+    handler: src/apis.createMock
     name: create-mock-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds
@@ -127,7 +127,7 @@ functions:
           path: create_mock
           method: POST
   getAllMocks:
-    handler: apis.getAllMocks
+    handler: src/apis.getAllMocks
     name: get-all-mock-${opt:stage, 'dev'}
     memorySize: 128 # mb
     timeout: 5 # seconds

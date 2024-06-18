@@ -39,8 +39,8 @@ jobs:
         echo API_ENDPOINT="https://xxx.execute-api.us-west-2.amazonaws.com" >> .env
         echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
         echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
-        echo DB_PREFIX="staging"
-        echo NODE_ENV="staging"
+        echo DB_PREFIX="staging" >> .env
+        echo NODE_ENV="staging" >> .env
         cat .env
 
     - name: Install dependencies

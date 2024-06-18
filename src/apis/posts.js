@@ -1,4 +1,4 @@
-const Dog = require('./../models/post');
+const Dog = require('../models/post');
 const {
     GetItemCommand,
     PutItemCommand,
