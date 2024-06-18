@@ -1,6 +1,4 @@
 const dynamoose = require("dynamoose");
-
-console.log('sdfdsfsdfsdf', process.env.NODE_ENV, process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY)
 const ddb =
   process.env.NODE_ENV === "development"
     ? new dynamoose.aws.ddb.DynamoDB({
