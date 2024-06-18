@@ -103,20 +103,6 @@ functions:
         Action:
           - "dynamodb:Scan"
         Resource: !GetAtt PostsTable.Arn
-  getAllNotes:
-    handler: apis.getAllNotes
-    name: get-all-notes
-    memorySize: 128 # mb
-    timeout: 5 # seconds
-    events:
-      - http:
-          path: notes
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:Scan"
-        Resource: !GetAtt NotesTable.Arn
   createMock:
     handler: apis.createMock
     name: create-mock
