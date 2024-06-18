@@ -18,6 +18,7 @@ plugins:
 custom:
   postsTableName: posts-table-${self:provider.stage}
   notesTableName: notes-table-${self:provider.stage}
+  dogsTableName: dogs-table-${self:provider.stage}
   dynamodb:
   # If you only want to use DynamoDB Local in some stages, declare them here
     stages:
@@ -161,6 +162,23 @@ resources:
         KeySchema:
           - AttributeName: noteId
             KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    DogsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.DogsTableName}
+        AttributeDefinitions:
+          - AttributeName: breed
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: breed
+            KeyType: HASH
+          - AttributeName: name
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
