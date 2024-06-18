@@ -127,6 +127,11 @@ functions:
       - http:
           path: create_mock
           method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt DogsTable.Arn
   getAllMocks:
     handler: src/apis.getAllMocks
     name: get-all-mock-${opt:stage, 'dev'}
@@ -136,21 +141,11 @@ functions:
       - http:
           path: mocks
           method: GET
-
-iam:
-  role:
-    statements:
-      - Effect: Allow
+    iamRoleStatements:
+      - Effect: "Allow"
         Action:
-          - dynamodb:DescribeTable
-          - dynamodb:Query
-          - dynamodb:Scan
-          - dynamodb:GetItem
-          - dynamodb:PutItem
-          - dynamodb:UpdateItem
-          - dynamodb:DeleteItem
-          - dynamodb:BatchWriteItem
-        Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/*"
+          - "dynamodb:Scan"
+        Resource: !GetAtt DogsTable.Arn
 
 resources:
   Resources:
