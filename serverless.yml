@@ -131,6 +131,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:PutItem"
+          - "dynamodb:BatchWriteItem"
         Resource: !GetAtt DogsTable.Arn
   getAllMocks:
     handler: src/apis.getAllMocks
