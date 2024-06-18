@@ -25,7 +25,7 @@ const configObj = {
   waitForActive: false
 };
 
-const DogModel = dynamoose.model(`${process.env.DB_PREFIX}-dogs-table`,
+const DogModel = dynamoose.model(`${process.env.STAGE}-dogs-table`,
   dogSchema,
   configObj
 );
