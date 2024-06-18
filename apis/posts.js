@@ -1,4 +1,4 @@
-const db = require("../db");
+const Dog = require('../models/post');
 const {
     GetItemCommand,
     PutItemCommand,
@@ -7,6 +7,35 @@ const {
     UpdateItemCommand,
 } = require("@aws-sdk/client-dynamodb");
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
+
+const createMock = async(event) => {
+    const response = { statusCode: 200 };
+    try {
+        const dogs = [{
+          name: 'Ollie',
+          breed: 'terrier',
+        }, {
+          name: 'Maxi',
+          breed: 'labrador',
+        }, {
+          name: 'Rio',
+          breed: 'border_collie',
+        }];
+  
+        await Dog.batchPut(dogs);
+  
+        response.body = JSON.stringify({ s: 'success', message: 'Dogs created successfully', d: dogs });
+      } catch (e) {
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: "Failed to create mockup",
+            errorMsg: e.message,
+            errorStack: e.stack,
+        });
+      }
+    
+      return response;
+}
 
 const getPost = async (event) => {
     const response = { statusCode: 200 };
@@ -154,10 +183,35 @@ const getAllPosts = async () => {
     return response;
 };
 
+const getAllMocks = async (event) => {
+    const response = { statusCode: 200 };
+
+    try {
+        const dogData = await Dog.scan().exec();
+
+        response.body = JSON.stringify({
+            message: "Successfully retrieved all posts.",
+            data: dogData
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: "Failed to retrieve posts.",
+            errorMsg: e.message,
+            errorStack: e.stack,
+        });
+    }
+
+    return response;
+};
+
 module.exports = {
   getPost,
   createPost,
   updatePost,
   deletePost,
   getAllPosts,
+  createMock,
+  getAllMocks,
 };

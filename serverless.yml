@@ -3,19 +3,34 @@ service: dynamodb-crud-api
 provider:
   name: aws
   runtime: nodejs20.x
-  stage: dev
+  stage: ${opt:stage, 'dev'}
   # profile: test-serverless
   region: us-west-1
   environment:
     DYNAMODB_TABLE_NAME: ${self:custom.postsTableName}
     NOTES_TABLE_NAME: ${self:custom.notesTableName}
 
+plugins:
+  - serverless-dynamodb
+  - serverless-iam-roles-per-function
+  - serverless-offline
+
 custom:
   postsTableName: posts-table-${self:provider.stage}
   notesTableName: notes-table-${self:provider.stage}
-
-plugins:
-  - serverless-iam-roles-per-function
+  dynamodb:
+  # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev:
+    start:
+      docker: true
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
 
 functions:
   getPost:
@@ -102,6 +117,24 @@ functions:
         Action:
           - "dynamodb:Scan"
         Resource: !GetAtt NotesTable.Arn
+  createMock:
+    handler: apis.createMock
+    name: create-mock
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: create_mock
+          method: POST
+  getAllMocks:
+    handler: apis.getAllMocks
+    name: get-all-mock
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: mocks
+          method: GET
 
 resources:
   Resources:
