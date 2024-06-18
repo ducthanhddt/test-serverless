@@ -1,7 +1,7 @@
 const dynamoose = require("dynamoose");
 
 const ddb =
-  process.env.NODE_ENV === "development"
+  process.env.STAGE === "development"
     ? new dynamoose.aws.ddb.DynamoDB({
         credentials: {
           accessKeyId: "MockAccessKeyId",

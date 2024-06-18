@@ -18,4 +18,15 @@ const dogSchema = new dynamoose.Schema({
   useDocumentTypes: true,
 });
 
-module.exports = dynamoose.model(`${process.env.DB_PREFIX}Dog`, dogSchema);
+// don't attempt to create a table in DynamoDb
+const configObj = {
+  create: false,
+  update: false,
+  waitForActive: false
+};
+
+const DogModel = dynamoose.model(`${process.env.DB_PREFIX}-dogs-table`,
+  dogSchema,
+  configObj
+);
+module.exports = DogModel;

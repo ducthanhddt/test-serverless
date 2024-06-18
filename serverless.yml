@@ -16,9 +16,9 @@ plugins:
   - serverless-offline
 
 custom:
-  postsTableName: posts-table-${self:provider.stage}
-  notesTableName: notes-table-${self:provider.stage}
-  dogsTableName: dogs-table-${self:provider.stage}
+  postsTableName: ${self:provider.stage}-posts-table
+  notesTableName: ${self:provider.stage}-notes-table
+  dogsTableName: ${self:provider.stage}-dogs-table
   dynamodb:
   # If you only want to use DynamoDB Local in some stages, declare them here
     stages:
